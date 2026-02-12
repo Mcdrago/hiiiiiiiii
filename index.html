@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hello Love ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  overflow-x: hidden;
+  background: linear-gradient(135deg,#ffd6e7,#ffeaf4);
+}
+
+/* Floating hearts, teddies, lilies */
+.floating {
+  position: fixed;
+  bottom: -50px;
+  font-size: 20px;
+  animation: floatUp 6s linear infinite;
+  opacity: 0.7;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-110vh); }
+}
+
+/* Opening Animation */
+#intro {
+  margin-top: 120px;
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+
+#intro.show {
+  opacity: 1;
+}
+
+h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 60px;
+  color: #ff2e75;
+  margin-bottom: 10px;
+}
+
+#subTitle {
+  font-weight: 300;
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+
+/* Buttons */
+button {
+  padding: 12px 25px;
+  margin: 10px;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.yes { background: #ff2e75; color: white; }
+.no { background: #444; color: white; }
+
+.hidden { display: none; }
+
+/* Flower */
+#flowerArea { margin-top: 40px; }
+
+#lily {
+  font-size: 120px;
+  animation: pop 1.5s ease forwards, glow 2s infinite alternate;
+}
+
+@keyframes pop {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity:1; }
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px pink; }
+  to { text-shadow: 0 0 40px hotpink; }
+}
+
+#letter {
+  max-width: 600px;
+  margin: 30px auto;
+  font-size: 20px;
+  line-height: 1.8;
+  font-family: 'Great Vibes', cursive;
+  opacity: 0;
+  animation: fadeIn 3s forwards;
+  animation-delay: 2s;
+}
+
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* Fireworks */
+.firework {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+  0% { transform: scale(0); opacity: 1; }
+  100% { transform: scale(8); opacity: 0; }
+}
+
+.music-btn {
+  margin-top: 20px;
+  background: #ff77aa;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<div id="intro" class="hidden">
+  <h1>Hello Love 💗</h1>
+  <h3 id="subTitle">Hope you had a great day ✨</h3>
+</div>
+
+<button class="music-btn" onclick="playMusic()">Play Music 🎶</button>
+
+<div id="proposal" class="hidden">
+  <h2>Will you be mine forever?</h2>
+  <button class="yes" onclick="sayYes()">Kabul Hai 💖</button>
+  <button class="no" id="noBtn">No 🙈</button>
+</div>
+
+<div id="flowerSection" class="hidden">
+  <button onclick="showFlower()">Grab Your Flower 🌸</button>
+</div>
+
+<div id="flowerArea" class="hidden">
+  <div id="lily">🌸</div>
+  <div id="letter">
+    When you love someone,<br>
+    you have to be brave —<br>
+    brave enough to tell them you love them,<br>
+    or brave enough to watch them love someone else.<br><br>
+    And I don’t want to be the second one.<br><br>
+    As I said earlier…<br>
+    I intend to be your last.<br><br>
+    Yours,<br>
+    Santa Klaus ❤️
+  </div>
+</div>
+
+<!-- Hidden YouTube iframe -->
+<iframe id="ytplayer" width="0" height="0"
+src="https://www.youtube.com/embed/Vabo2KVaEwA?enablejsapi=1"
+frameborder="0" allow="autoplay"></iframe>
+
+<script>
+
+/* Opening Animation */
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    const intro = document.getElementById("intro");
+    intro.classList.remove("hidden");
+    intro.classList.add("show");
+
+    setTimeout(() => {
+      document.getElementById("subTitle").style.opacity = "1";
+    }, 1500);
+
+  }, 1000);
+
+  setTimeout(() => {
+    document.getElementById("proposal").classList.remove("hidden");
+  }, 4000);
+});
+
+/* Floating background */
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "floating";
+  const arr = ["💖","🧸","🌸"];
+  heart.innerHTML = arr[Math.floor(Math.random()*arr.length)];
+  heart.style.left = Math.random()*100 + "vw";
+  heart.style.fontSize = (Math.random()*20+20)+"px";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),6000);
+}, 600);
+
+/* No button behavior */
+let noClickCount = 0;
+const noBtn = document.getElementById("noBtn");
+
+noBtn.addEventListener("click", () => {
+  noClickCount++;
+
+  let scaleValue = 1 - (noClickCount * 0.15);
+  if (scaleValue < 0.2) scaleValue = 0.2;
+
+  noBtn.style.transform = `scale(${scaleValue})`;
+  noBtn.style.position = "absolute";
+  noBtn.style.left = Math.random() * 80 + "%";
+  noBtn.style.top = Math.random() * 70 + "%";
+
+  if (noClickCount >= 5) {
+    noBtn.style.opacity = "0.3";
+    noBtn.innerText = "🙈";
+  }
+});
+
+/* Yes button */
+function sayYes() {
+
+  const proposal = document.getElementById("proposal");
+  proposal.style.transition = "opacity 1s ease";
+  proposal.style.opacity = "0";
+
+  setTimeout(() => {
+    proposal.innerHTML = `
+      <h2 style="color:#ff2e75; font-family:'Great Vibes',cursive;">
+        I am feeling epic 💖✨
+      </h2>
+    `;
+
+    proposal.style.opacity = "1";
+    launchFireworks();
+
+    setTimeout(() => {
+      document.getElementById("flowerSection").classList.remove("hidden");
+    }, 2000);
+
+  }, 1000);
+}
+
+/* Fireworks */
+function launchFireworks() {
+  for (let i = 0; i < 25; i++) {
+    const fw = document.createElement("div");
+    fw.className = "firework";
+    fw.style.background = ["gold","hotpink","#ff2e75","#ff77aa"][Math.floor(Math.random()*4)];
+    fw.style.left = Math.random() * 100 + "vw";
+    fw.style.top = Math.random() * 60 + "vh";
+    document.body.appendChild(fw);
+
+    setTimeout(() => fw.remove(), 1000);
+  }
+}
+
+/* Flower */
+function showFlower() {
+  document.getElementById("flowerArea").classList.remove("hidden");
+}
+
+/* Music */
+function playMusic(){
+  document.getElementById("ytplayer").contentWindow.postMessage(
+    '{"event":"command","func":"playVideo","args":""}',
+    '*'
+  );
+}
+
+</script>
+</body>
+</html>
